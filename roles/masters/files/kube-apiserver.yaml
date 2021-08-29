@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    component: apiserver
+    provider: kubernetes
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  selector:
+    component: kube-apiserver
+    tier: control-plane
+  clusterIP: 10.96.0.2
+  clusterIPs:
+  - 10.96.0.2
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: https
+    port: 6443
+    protocol: TCP
+    targetPort: 6443
+  sessionAffinity: None
+  type: ClusterIP

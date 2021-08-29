@@ -1,0 +1,5 @@
+- name: Configure ContainerD
+  shell: containerd config default > /etc/containerd/config.toml
+
+- name: Swapoff
+  shell: "swapoff -a"

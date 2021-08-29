@@ -1,0 +1,19 @@
+- name: install kubectl
+  apt:
+    name: kubectl
+    state: present
+
+- name: install acl package
+  apt:
+    name: acl
+    state: present
+
+- name: copy kuberouter yaml
+  copy:
+    src: kube-router-v1.yaml
+    dest: /home/ubuntu/kube-router-v1.yaml
+
+- name: copy api server svc
+  copy:
+    src: kube-apiserver.yaml
+    dest: /home/ubuntu/kube-apiserver.yaml

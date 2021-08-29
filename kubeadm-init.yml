@@ -1,0 +1,58 @@
+- hosts: masters
+  become: yes
+  tasks:
+  - name: initialize the cluster
+    shell: kubeadm init --service-cidr 10.96.0.0/14 --pod-network-cidr 10.90.0.0/16 --kubernetes-version stable-1.22  --control-plane-endpoint kube-apiserver:6443 --cri-socket=/run/containerd/containerd.sock >> cluster_initialized.txt
+    args:
+      chdir: $HOME
+      creates: cluster_initialized.txt
+
+  - name: create .kube directory
+    become: yes
+    become_user: ubuntu
+    file:
+      path: $HOME/.kube
+      state: directory
+      mode: "0755"
+
+  - name: copy admin.conf to user's kube config
+    copy:
+      src: /etc/kubernetes/admin.conf
+      dest: /home/ubuntu/.kube/config
+      remote_src: yes
+      owner: ubuntu
+
+  - name: Create kube-router kube-config
+    become: yes
+    become_user: ubuntu
+    shell: kubectl create configmap kube-router-kubeconfig -n kube-system --from-file=.kube/config >> kuberouter-config-setup.txt
+    args:
+      chdir: $HOME
+      creates: kuberouter-config-setup.txt
+
+  - name: install Pod network
+    become: yes
+    become_user: ubuntu
+    shell: kubectl apply -f kube-router-v1.yaml >> pod_network_setup.txt
+    args:
+      chdir: $HOME
+      creates: pod_network_setup.txt
+
+  - name: Annotate Node
+    become: yes
+    become_user: ubuntu
+    shell:
+      cmd: |
+        kubectl annotate node $(uname -n) "kube-router.io/node.asn=64512" --overwrite
+        kubectl annotate node $(uname -n) "kube-router.io/peer.ips=172.20.22.253,172.20.22.254" --overwrite
+        kubectl annotate node $(uname -n) "kube-router.io/peer.asns=65000,65000" --overwrite
+    args:
+      chdir: $HOME
+
+  - name: add kube-apiserver service
+    become: yes
+    become_user: ubuntu
+    shell: kubectl apply -f kube-apiserver.yaml >> kube-apiserver.txt
+    args:
+      chdir: $HOME
+      creates: kube-apiserver.txt

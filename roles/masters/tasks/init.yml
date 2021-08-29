@@ -1,0 +1,25 @@
+- name: initialize the cluster
+  shell: kubeadm init --service-cidr 10.96.0.0/14 --pod-network-cidr 10.90.0.0/16 --kubernetes-version stable-1.22  --control-plane-endpoint kube-apiserver:6443 --cri-socket=/run/containerd/containerd.sock >> cluster_initialized.txt
+  args:
+    chdir: $HOME
+    creates: cluster_initialized.txt
+
+- name: copy admin.conf to user's kube config
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /home/ubuntu/.kube/config
+    remote_src: yes
+    owner: ubuntu
+
+- name: copy kuberouter yaml
+  copy:
+    src: kube-router-v1.yaml
+    dest: /home/ubuntu/kube-router-v1.yaml
+
+- name: install Pod network
+  become: yes
+  become_user: ubuntu
+  shell: kubectl apply -f kube-router-v1.yaml >> pod_network_setup.txt
+  args:
+    chdir: $HOME
+    creates: pod_network_setup.txt

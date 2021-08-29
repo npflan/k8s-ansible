@@ -1,0 +1,94 @@
+- name: uninstall Docker
+  apt:
+    name: docker.io
+    state: absent
+
+- name: Add containerd module
+  lineinfile:
+    dest: /etc/modules-load.d/containerd.conf
+    line: '{{ item }}'
+    create: yes
+  with_items:
+  - overlay
+  - br_netfilter
+
+- name: load-containerd-modules
+  community.general.modprobe:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - overlay
+  - br_netfilter
+
+- name: apply CRI sysctl
+  ansible.posix.sysctl:
+    name: "{{ item }}"
+    value: '1'
+    sysctl_file: /etc/sysctl.d/99-kubernetes-cri.conf
+    reload: yes
+  with_items:
+  - net.bridge.bridge-nf-call-iptables
+  - net.ipv4.ip_forward
+  - net.bridge.bridge-nf-call-ip6tables
+
+- name: install APT Transport HTTPS
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: add Kubernetes apt-key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: add Kubernetes' APT repository
+  apt_repository:
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+    filename: 'kubernetes'
+
+- name: install containerd
+  apt:
+    name: containerd
+    state: present
+    update_cache: true
+
+- name: Create containerd config dir
+  file:
+    path: /etc/containerd
+    state: directory
+  notify:
+  - Configure ContainerD
+
+- name: Execute ContainerD Handler
+  meta: flush_handlers
+
+- name: Start ContainerD
+  service:
+    name: containerd
+    state: started
+
+- name: install kubelet
+  apt:
+    name: kubelet
+    state: present
+    update_cache: true
+
+- name: install kubeadm
+  apt:
+    name: kubeadm
+    state: present
+
+- name: disable swap
+  lineinfile:
+    path: /etc/fstab
+    state: absent
+    search_string: "swap.img"
+  notify:
+  - Swapoff
+
+- name: HA Control DNS
+  lineinfile:
+    dest: /etc/hosts
+    line: '172.20.22.11 kube-apiserver'
+

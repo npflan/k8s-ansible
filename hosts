@@ -1,0 +1,14 @@
+[masters]
+soldier76 ansible_host=172.20.22.11 ansible_user=npf
+
+[workers]
+widowmaker ansible_host=172.20.22.12 ansible_user=npf
+mercy ansible_host=172.20.22.14 ansible_user=npf
+brigitte ansible_host=172.20.22.10 ansible_user=npf
+diva ansible_host=172.20.22.15 ansible_user=npf
+winston ansible_host=172.20.22.16 ansible_user=npf
+roadhog ansible_host=172.20.22.17 ansible_user=npf
+bastion ansible_host=172.20.22.18 ansible_user=npf
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3

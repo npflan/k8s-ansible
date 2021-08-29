@@ -1,0 +1,14 @@
+- hosts: all
+  become: yes
+  tasks:
+  - name: Deps
+    import_role:
+      name: common
+      tasks_from: deps
+- hosts: masters
+  become: yes
+  tasks:
+  - name: Deps
+    import_role:
+      name: masters
+      tasks_from: deps

@@ -1,0 +1,7 @@
+- hosts: all
+  become: yes
+  tasks:
+  - name: Initial
+    import_role:
+      name: common
+      tasks_from: initial
