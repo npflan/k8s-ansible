@@ -87,8 +87,4 @@
   notify:
   - Swapoff
 
-- name: HA Control DNS
-  lineinfile:
-    dest: /etc/hosts
-    line: '172.20.22.11 kube-apiserver'
 

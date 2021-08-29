@@ -1,6 +1,9 @@
 [masters]
 soldier76 ansible_host=172.20.22.11 ansible_user=npf
 
+[server.masters]
+srvkubemaster ansible_host=10.100.102.2
+
 [workers]
 widowmaker ansible_host=172.20.22.12 ansible_user=npf
 mercy ansible_host=172.20.22.14 ansible_user=npf
@@ -10,5 +13,17 @@ winston ansible_host=172.20.22.16 ansible_user=npf
 roadhog ansible_host=172.20.22.17 ansible_user=npf
 bastion ansible_host=172.20.22.18 ansible_user=npf
 
+[server.workers]
+
+
+[server.all:children]
+server.workers
+server.masters
+
+[server.all:vars]
+ssh_key_file=server-npf-ansible.pub
+ansible_user=npfuser
+
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
+ssh_key_file=npf-ansible.pub

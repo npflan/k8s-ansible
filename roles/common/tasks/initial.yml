@@ -10,4 +10,4 @@
 - name: set up authorized keys for the ubuntu user
   authorized_key: user=ubuntu key="{{item}}"
   with_file:
-  - npf-ansible.pub
+  - {{ ssh_key_file }}
