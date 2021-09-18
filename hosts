@@ -1,7 +1,7 @@
 [masters]
 soldier76 ansible_host=172.20.22.11 ansible_user=npf
 
-[server.masters]
+[servermasters]
 srvkubemaster ansible_host=10.100.102.2
 
 [workers]
@@ -13,14 +13,19 @@ winston ansible_host=172.20.22.16 ansible_user=npf
 roadhog ansible_host=172.20.22.17 ansible_user=npf
 bastion ansible_host=172.20.22.18 ansible_user=npf
 
-[server.workers]
+[serverworkers]
 
+[serverrack2]
+srvkubemaster
 
-[server.all:children]
-server.workers
-server.masters
+[serverrack2:vars]
+bgp_ip=10.100.202.1
 
-[server.all:vars]
+[serverall:children]
+serverworkers
+servermasters
+
+[serverall:vars]
 ssh_key_file=server-npf-ansible.pub
 ansible_user=npfuser
 

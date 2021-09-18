@@ -44,8 +44,8 @@
     shell:
       cmd: |
         kubectl annotate node $(uname -n) "kube-router.io/node.asn=64512" --overwrite
-        kubectl annotate node $(uname -n) "kube-router.io/peer.ips=172.20.22.253,172.20.22.254" --overwrite
-        kubectl annotate node $(uname -n) "kube-router.io/peer.asns=65000,65000" --overwrite
+        kubectl annotate node $(uname -n) "kube-router.io/peer.ips=" --overwrite
+        kubectl annotate node $(uname -n) "kube-router.io/peer.asns=65000" --overwrite
     args:
       chdir: $HOME
 

@@ -1,4 +1,4 @@
-- hosts: masters
+- hosts: servermasters
   become: yes
   tasks:
   - name: initialize the cluster
@@ -44,15 +44,7 @@
     shell:
       cmd: |
         kubectl annotate node $(uname -n) "kube-router.io/node.asn=64512" --overwrite
-        kubectl annotate node $(uname -n) "kube-router.io/peer.ips=172.20.22.253,172.20.22.254" --overwrite
-        kubectl annotate node $(uname -n) "kube-router.io/peer.asns=65000,65000" --overwrite
+        kubectl annotate node $(uname -n) "kube-router.io/peer.ips={{ bgp_ip }}" --overwrite
+        kubectl annotate node $(uname -n) "kube-router.io/peer.asns=65000" --overwrite
     args:
       chdir: $HOME
-
-  - name: add kube-apiserver service
-    become: yes
-    become_user: ubuntu
-    shell: kubectl apply -f kube-apiserver.yaml >> kube-apiserver.txt
-    args:
-      chdir: $HOME
-      creates: kube-apiserver.txt

@@ -17,3 +17,4 @@
   copy:
     src: kube-apiserver.yaml
     dest: /home/ubuntu/kube-apiserver.yaml
+  when: "'masters' in role_names"

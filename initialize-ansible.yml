@@ -1,0 +1,7 @@
+---
+- hosts: serverall
+  gather_facts: no
+  tasks:
+  - name: ensure required python3 and python-simplejson packages are installed
+    raw: apt -y update && apt install -y python3 python-simplejson
+    become: yes

@@ -1,5 +1,5 @@
 - name: create the 'ubuntu' user
-  user: name=ubuntu append=yes state=present createhome=yes shell=/bin/bash
+  user: name=ubuntu groups=ubuntu append=yes state=present createhome=yes shell=/bin/bash
 
 - name: allow 'ubuntu' to have passwordless sudo
   lineinfile:
@@ -10,4 +10,9 @@
 - name: set up authorized keys for the ubuntu user
   authorized_key: user=ubuntu key="{{item}}"
   with_file:
-  - {{ ssh_key_file }}
+  - "{{ ssh_key_file }}"
+
+- name: set up authorized keys for the ansible user
+  authorized_key: user="{{ansible_user}}" key="{{item}}"
+  with_file:
+  - "{{ ssh_key_file }}"

@@ -5,7 +5,7 @@
     import_role:
       name: common
       tasks_from: deps
-- hosts: masters
+- hosts: masters:servermasters
   become: yes
   tasks:
   - name: Deps
