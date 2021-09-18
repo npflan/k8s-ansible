@@ -30,6 +30,11 @@
       chdir: $HOME
       creates: kuberouter-config-setup.txt
 
+  - name: copy kuberouter yaml
+    copy:
+      src: roles/masters/files/kube-router-v1.yaml
+      dest: /home/ubuntu/kube-router-v1.yaml
+
   - name: install Pod network
     become: yes
     become_user: ubuntu
@@ -43,8 +48,8 @@
     become_user: ubuntu
     shell:
       cmd: |
-        kubectl annotate node $(uname -n) "kube-router.io/node.asn=64512" --overwrite
+        kubectl annotate node $(uname -n) "kube-router.io/node.asn={{ node_asn }}" --overwrite
         kubectl annotate node $(uname -n) "kube-router.io/peer.ips={{ bgp_ip }}" --overwrite
-        kubectl annotate node $(uname -n) "kube-router.io/peer.asns=65000" --overwrite
+        kubectl annotate node $(uname -n) "kube-router.io/peer.asns={{ peer_asn}}" --overwrite
     args:
       chdir: $HOME

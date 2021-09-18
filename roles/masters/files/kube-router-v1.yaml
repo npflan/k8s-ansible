@@ -61,10 +61,12 @@ spec:
         - --advertise-cluster-ip=true
         - --bgp-graceful-restart=true
         - --enable-overlay=false
-        - --cluster-asn=64512
-        - --nodes-full-mesh=true
+        - --cluster-asn=64590
         - --enable-ibgp=true
+        - --nodes-full-mesh=true
         - --override-nexthop=true
+        - --iptables-sync-period=30s
+        - --bgp-graceful-restart-deferral-time=30s
         - --metrics-port=9201
         env:
         - name: NODE_NAME

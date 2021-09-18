@@ -14,12 +14,21 @@ roadhog ansible_host=172.20.22.17 ansible_user=npf
 bastion ansible_host=172.20.22.18 ansible_user=npf
 
 [serverworkers]
+179400 ansible_host=10.100.103.20
 
 [serverrack2]
 srvkubemaster
 
+[serverrack3]
+179400
+
 [serverrack2:vars]
-bgp_ip=10.100.202.1
+bgp_ip=10.100.102.1
+#node_asn=64502
+
+[serverrack3:vars]
+bgp_ip=10.100.103.1
+#node_asn=64503
 
 [serverall:children]
 serverworkers
@@ -28,6 +37,8 @@ servermasters
 [serverall:vars]
 ssh_key_file=server-npf-ansible.pub
 ansible_user=npfuser
+peer_asn=64591
+node_asn=64590
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
