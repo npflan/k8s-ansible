@@ -14,13 +14,49 @@ roadhog ansible_host=172.20.22.17 ansible_user=npf
 bastion ansible_host=172.20.22.18 ansible_user=npf
 
 [serverworkers]
-179400 ansible_host=10.100.103.20
+179400 ansible_host=10.100.103.28
+164284 ansible_host=10.100.103.29
+161739 ansible_host=10.100.103.30
+171651 ansible_host=10.100.103.31
+175374 ansible_host=10.100.103.35
+171153 ansible_host=10.100.102.20
+171669 ansible_host=10.100.102.21
+178088 ansible_host=10.100.102.22
+171034 ansible_host=10.100.102.23
+170243 ansible_host=10.100.102.24
+177615 ansible_host=10.100.102.25
+178788 ansible_host=10.100.102.26
+177029 ansible_host=10.100.102.27
+174828 ansible_host=10.100.102.28
+171932 ansible_host=10.100.102.29
+173883 ansible_host=10.100.102.30
+179875 ansible_host=10.100.102.31
+170104 ansible_host=10.100.102.32
+175530 ansible_host=10.100.102.33
 
 [serverrack2]
 srvkubemaster
+171153
+171669
+178088
+171034
+170243
+177615
+178788
+177029
+174828
+171932
+173883
+179875
+170104
+175530
 
 [serverrack3]
 179400
+164284
+161739
+171651
+175374
 
 [serverrack2:vars]
 bgp_ip=10.100.102.1

@@ -1,0 +1,8 @@
+- hosts: serverall
+  become: yes
+  gather_facts: true
+  tasks:
+  - name: Print hostnames aliases
+    ansible.builtin.debug:
+      msg:
+      - "{{ ansible_hostname }} ansible_host={{ansible_default_ipv4.address}}"
