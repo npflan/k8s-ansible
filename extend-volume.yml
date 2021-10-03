@@ -1,0 +1,16 @@
+# Before running this you need to run: ansible-galaxy collection install community.general
+#
+- hosts: serverall
+  become: yes
+  gather_facts: no
+  tasks:
+
+  - name: Extend the logical volume to consume all remaining space in the volume group
+    community.general.lvol:
+      vg: ubuntu-vg
+      lv: ubuntu-lv
+      size: +100%FREE
+      resizefs: true
+
+  # - name: resize2fs
+  #   raw: resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
