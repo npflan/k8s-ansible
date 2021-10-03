@@ -14,25 +14,34 @@ roadhog ansible_host=172.20.22.17 ansible_user=npf
 bastion ansible_host=172.20.22.18 ansible_user=npf
 
 [serverworkers]
-179400 ansible_host=10.100.103.28
-164284 ansible_host=10.100.103.29
 161739 ansible_host=10.100.103.30
-171651 ansible_host=10.100.103.31
-175374 ansible_host=10.100.103.35
-171153 ansible_host=10.100.102.20
-171669 ansible_host=10.100.102.21
-178088 ansible_host=10.100.102.22
-171034 ansible_host=10.100.102.23
-170243 ansible_host=10.100.102.24
-177615 ansible_host=10.100.102.25
-178788 ansible_host=10.100.102.26
-177029 ansible_host=10.100.102.27
-174828 ansible_host=10.100.102.28
-171932 ansible_host=10.100.102.29
-173883 ansible_host=10.100.102.30
-179875 ansible_host=10.100.102.31
+164284 ansible_host=10.100.103.29
 170104 ansible_host=10.100.102.32
+170243 ansible_host=10.100.102.24
+171034 ansible_host=10.100.102.23
+171153 ansible_host=10.100.102.20
+171651 ansible_host=10.100.103.31
+171669 ansible_host=10.100.102.21
+171849 ansible_host=10.100.103.26
+171932 ansible_host=10.100.102.29
+172177 ansible_host=10.100.103.33
+173035 ansible_host=10.100.103.24
+173883 ansible_host=10.100.102.30
+174828 ansible_host=10.100.102.28
+175374 ansible_host=10.100.103.35
 175530 ansible_host=10.100.102.33
+176080 ansible_host=10.100.103.22
+176091 ansible_host=10.100.103.23
+176481 ansible_host=10.100.103.34
+177029 ansible_host=10.100.102.27
+177212 ansible_host=10.100.103.32
+177615 ansible_host=10.100.102.25
+178088 ansible_host=10.100.102.22
+178361 ansible_host=10.100.103.25
+178788 ansible_host=10.100.102.26
+179400 ansible_host=10.100.103.28
+179875 ansible_host=10.100.102.31
+176844 ansible_host=10.100.103.27
 
 [serverrack2]
 srvkubemaster
@@ -52,11 +61,20 @@ srvkubemaster
 175530
 
 [serverrack3]
-179400
-164284
 161739
+164284
 171651
+171849
+172177
+173035
 175374
+176080
+176091
+176481
+177212
+178361
+179400
+176844
 
 [serverrack2:vars]
 bgp_ip=10.100.102.1
