@@ -1,0 +1,27 @@
+---
+- hosts: serverworkers
+  gather_facts: no
+  become: yes
+  tasks:
+
+  - name: install sshpass
+    apt:
+      name: sshpass
+      state: present
+
+  - name: Fetching logs and demos
+    synchronize:
+      rsync_path: /usr/bin/rsync
+      src: /opt/csgo-scratch/
+      dest: /root/csgo-files
+      mode: pull
+      recursive: yes
+      links: no
+      delete: no
+      rsync_opts:
+      - "--no-motd"
+      # - "--exclude='*'"
+      # - "--include='*.dem'"
+      # - "--include='*.log'"
+    vars:
+      ansible_ssh_pipelining: true
